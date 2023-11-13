@@ -1,16 +1,9 @@
 @extends('data-table.main')
 
 @section('table')
-    @can('create-role')
-    {{-- <a class="btn btn-primary" href="/create-roles" id="createRole"> Add New Group</a> --}}
-    <a class="btn btn-primary" href="/create-roles"> Add New Group</a>
+    @can('create-brand')
+    <a class="btn btn-primary" href="javascript:void(0)" id="createBrand"> Add New Brand</a>
     @endauth
-
-    @if(session('success'))
-        <script>
-            Swal.fire('Success', '{{ session('success') }}', 'success');
-        </script>
-    @endif
 
     <div class="row py-3">
         <div class="col-md-12">
@@ -21,8 +14,8 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Role Name</th>
-                                <th>Guard Name</th>
+                                <th>Brand Code</th>
+                                <th>Brand Name</th>
                                 <th width="100px">Action</th>
                             </tr>
                         </thead>
@@ -44,21 +37,21 @@
                     <form id="postForm" name="postForm" class="form-horizontal">
                        <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="name" class="col-sm-6 control-label">Role Name</label>
+                            <label for="brand_code" class="col-sm-6 control-label">Brand Code</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Role Name" value="" required>
+                                <input type="text" class="form-control" id="brand_code" name="brand_code" placeholder="Enter Brand Name" value="" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="guard_name" class="col-sm-6 control-label">Guard Name</label>
+                            <label for="brand_name" class="col-sm-6 control-label">Brand Name</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="guard_name" name="guard_name" placeholder="Enter Guard Name" value="" required>
+                                <input type="text" class="form-control" id="brand_name" name="brand_name" placeholder="Enter Brand Name" value="" required>
                             </div>
                         </div>
 
                         <div class="col-sm-offset-2 col-sm-10">
-                         <button type="submit" class="btn btn-primary" id="savedata" value="create">Save Post
+                         <button type="submit" class="btn btn-primary" id="savedata" value="create">Save Brand
                          </button>
                         </div>
                     </form>
@@ -81,42 +74,43 @@
       var table = $('.data-table').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "/roles",
+          ajax: "/brands",
           columns: [
               {data: 'no', name: 'no'},
-              {data: 'name', name: 'name'},
-              {data: 'guard_name', name: 'guard_name'},
+              {data: 'brand_code', name: 'brand_code'},
+              {data: 'brand_name', name: 'brand_name'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
 
-        $('#createRole').click(function () {
-            $('#savedata').val("create-group");
+        $('#createBrand').click(function () {
+            $('#savedata').val("create-brand");
             $('#id').val('');
             $('#postForm').trigger("reset");
-            $('#modelHeading').html("Create New Group");
+            $('#modelHeading').html("Create New Brand");
             $('#ajaxModelexa').modal('show');
         });
 
-        $('body').on('click', '.editGroup', function () {
+        $('body').on('click', '.editBrand', function () {
             var id = $(this).data('id');
             console.log(id);
-            $.get("roles" +'/' + id , function (data) {
-                $('#modelHeading').html("Edit Group");
-                $('#savedata').val("edit-group");
+            $.get("brands" +'/' + id , function (data) {
+                $('#modelHeading').html("Edit Brand");
+                $('#savedata').val("edit-brand");
                 $('#ajaxModelexa').modal('show');
                 $('#id').val(data.id);
-                $('#name').val(data.name);
-                $('#guard_name').val(data.guard_name);
+                $('#brand_code').val(data.brand_code);
+                $('#brand_name').val(data.brand_name);
             })
         });
 
         $('#savedata').click(function (e) {
             e.preventDefault();
+            // $(this).html('Sending..');
 
             $.ajax({
             data: $('#postForm').serialize(),
-            url: "/roles",
+            url: "/brands",
             type: "POST",
             dataType: 'json',
             success: function (data) {
@@ -126,7 +120,7 @@
                 table.draw();
                 Swal.fire({
                     icon: 'success',
-                    title: 'Role created successfully!',
+                    title: 'Brand created successfully!',
                 });
             },
             error: function (data) {
@@ -141,7 +135,7 @@
         });
         });
 
-        $('body').on('click', '.deleteRole', function () {
+        $('body').on('click', '.deleteBrand', function () {
             var id = $(this).data("id");
 
             Swal.fire({
@@ -156,7 +150,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'DELETE',
-                        url: `/roles/${id}`,
+                        url: `/brands/${id}`,
                         success: function (data) {
                             if(data.response){
                                 Swal.fire('Deleted!', data.response, 'success');

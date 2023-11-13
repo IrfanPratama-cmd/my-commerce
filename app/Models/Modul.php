@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Models\Role as ModelsRole;
 
-class Role extends ModelsRole
+class Modul extends Model
 {
     use HasFactory;
-    
+
+    protected $table = "modul";
+
+    public function permission(){
+        return $this->hasMany(Permission::class);
+    }
 }

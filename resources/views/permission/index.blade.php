@@ -2,15 +2,8 @@
 
 @section('table')
     @can('create-role')
-    {{-- <a class="btn btn-primary" href="/create-roles" id="createRole"> Add New Group</a> --}}
-    <a class="btn btn-primary" href="/create-roles"> Add New Group</a>
+    <a class="btn btn-primary" href="javascript:void(0)" id="createRole"> Add New Permission</a>
     @endauth
-
-    @if(session('success'))
-        <script>
-            Swal.fire('Success', '{{ session('success') }}', 'success');
-        </script>
-    @endif
 
     <div class="row py-3">
         <div class="col-md-12">
@@ -21,7 +14,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Role Name</th>
+                                <th>Permission Name</th>
                                 <th>Guard Name</th>
                                 <th width="100px">Action</th>
                             </tr>
@@ -44,9 +37,9 @@
                     <form id="postForm" name="postForm" class="form-horizontal">
                        <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="name" class="col-sm-6 control-label">Role Name</label>
+                            <label for="name" class="col-sm-6 control-label">Permission Name</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Role Name" value="" required>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Permission Name" value="" required>
                             </div>
                         </div>
 
@@ -58,7 +51,7 @@
                         </div>
 
                         <div class="col-sm-offset-2 col-sm-10">
-                         <button type="submit" class="btn btn-primary" id="savedata" value="create">Save Post
+                         <button type="submit" class="btn btn-primary" id="savedata" value="create">Save Permission
                          </button>
                         </div>
                     </form>
@@ -81,7 +74,7 @@
       var table = $('.data-table').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "/roles",
+          ajax: "/permissions",
           columns: [
               {data: 'no', name: 'no'},
               {data: 'name', name: 'name'},
@@ -101,7 +94,7 @@
         $('body').on('click', '.editGroup', function () {
             var id = $(this).data('id');
             console.log(id);
-            $.get("roles" +'/' + id , function (data) {
+            $.get("permissions" +'/' + id , function (data) {
                 $('#modelHeading').html("Edit Group");
                 $('#savedata').val("edit-group");
                 $('#ajaxModelexa').modal('show');
@@ -113,10 +106,11 @@
 
         $('#savedata').click(function (e) {
             e.preventDefault();
+            // $(this).html('Sending..');
 
             $.ajax({
             data: $('#postForm').serialize(),
-            url: "/roles",
+            url: "/permissions",
             type: "POST",
             dataType: 'json',
             success: function (data) {
@@ -156,7 +150,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'DELETE',
-                        url: `/roles/${id}`,
+                        url: `/permissions/${id}`,
                         success: function (data) {
                             if(data.response){
                                 Swal.fire('Deleted!', data.response, 'success');

@@ -1,16 +1,9 @@
 @extends('data-table.main')
 
 @section('table')
-    @can('create-role')
-    {{-- <a class="btn btn-primary" href="/create-roles" id="createRole"> Add New Group</a> --}}
-    <a class="btn btn-primary" href="/create-roles"> Add New Group</a>
+    @can('create-category')
+    <a class="btn btn-primary" href="javascript:void(0)" id="createCategory"> Add New Category</a>
     @endauth
-
-    @if(session('success'))
-        <script>
-            Swal.fire('Success', '{{ session('success') }}', 'success');
-        </script>
-    @endif
 
     <div class="row py-3">
         <div class="col-md-12">
@@ -21,8 +14,8 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Role Name</th>
-                                <th>Guard Name</th>
+                                <th>Category Code</th>
+                                <th>Category Name</th>
                                 <th width="100px">Action</th>
                             </tr>
                         </thead>
@@ -44,21 +37,21 @@
                     <form id="postForm" name="postForm" class="form-horizontal">
                        <input type="hidden" name="id" id="id">
                         <div class="form-group">
-                            <label for="name" class="col-sm-6 control-label">Role Name</label>
+                            <label for="category_code" class="col-sm-6 control-label">Category Code</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Enter Role Name" value="" required>
+                                <input type="text" class="form-control" id="category_code" name="category_code" placeholder="Enter Category Name" value="" required>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="guard_name" class="col-sm-6 control-label">Guard Name</label>
+                            <label for="category_name" class="col-sm-6 control-label">Category Name</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="guard_name" name="guard_name" placeholder="Enter Guard Name" value="" required>
+                                <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter Category Name" value="" required>
                             </div>
                         </div>
 
                         <div class="col-sm-offset-2 col-sm-10">
-                         <button type="submit" class="btn btn-primary" id="savedata" value="create">Save Post
+                         <button type="submit" class="btn btn-primary" id="savedata" value="create">Save Category
                          </button>
                         </div>
                     </form>
@@ -81,42 +74,43 @@
       var table = $('.data-table').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "/roles",
+          ajax: "/categories",
           columns: [
               {data: 'no', name: 'no'},
-              {data: 'name', name: 'name'},
-              {data: 'guard_name', name: 'guard_name'},
+              {data: 'category_code', name: 'category_code'},
+              {data: 'category_name', name: 'category_name'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });
 
-        $('#createRole').click(function () {
-            $('#savedata').val("create-group");
+        $('#createCategory').click(function () {
+            $('#savedata').val("create-category");
             $('#id').val('');
             $('#postForm').trigger("reset");
-            $('#modelHeading').html("Create New Group");
+            $('#modelHeading').html("Create New category");
             $('#ajaxModelexa').modal('show');
         });
 
-        $('body').on('click', '.editGroup', function () {
+        $('body').on('click', '.editCategory', function () {
             var id = $(this).data('id');
             console.log(id);
-            $.get("roles" +'/' + id , function (data) {
-                $('#modelHeading').html("Edit Group");
-                $('#savedata').val("edit-group");
+            $.get("categories" +'/' + id , function (data) {
+                $('#modelHeading').html("Edit Category");
+                $('#savedata').val("edit-category");
                 $('#ajaxModelexa').modal('show');
                 $('#id').val(data.id);
-                $('#name').val(data.name);
-                $('#guard_name').val(data.guard_name);
+                $('#category_code').val(data.category_code);
+                $('#category_name').val(data.category_name);
             })
         });
 
         $('#savedata').click(function (e) {
             e.preventDefault();
+            // $(this).html('Sending..');
 
             $.ajax({
             data: $('#postForm').serialize(),
-            url: "/roles",
+            url: "/categories",
             type: "POST",
             dataType: 'json',
             success: function (data) {
@@ -126,7 +120,7 @@
                 table.draw();
                 Swal.fire({
                     icon: 'success',
-                    title: 'Role created successfully!',
+                    title: 'category created successfully!',
                 });
             },
             error: function (data) {
@@ -141,7 +135,7 @@
         });
         });
 
-        $('body').on('click', '.deleteRole', function () {
+        $('body').on('click', '.deleteCategory', function () {
             var id = $(this).data("id");
 
             Swal.fire({
@@ -156,7 +150,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'DELETE',
-                        url: `/roles/${id}`,
+                        url: `/categories/${id}`,
                         success: function (data) {
                             if(data.response){
                                 Swal.fire('Deleted!', data.response, 'success');
