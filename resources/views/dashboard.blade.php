@@ -1,7 +1,6 @@
 @extends('layout.main')
 
 @section('container')
-    <h1>Hello, Selamat Datang {{ auth()->user()->name }}</h1><br>
 
     <div class="row">
         <div class="col-lg-3 col-6">

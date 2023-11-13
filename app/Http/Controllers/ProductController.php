@@ -134,12 +134,12 @@ class ProductController extends Controller
          if ($files = $request->file('asset')) {
 
             //delete old file
-            File::delete('public/product/'.$request->asset);
+            File::delete('product/'.$request->asset);
             ProductAsset::where('product_id', $request->id)->delete();
 
 
             //insert new file
-            $destinationPath = 'public/product/'; // upload path
+            $destinationPath = 'product/'; // upload path
             $filename = $request->product_name . '.' . $files->getClientOriginalExtension();
             $files->move($destinationPath, $filename);
             // $size = $request->file('asset')->getSize();
@@ -148,7 +148,6 @@ class ProductController extends Controller
             ProductAsset::create([
                 'product_id' => $id,
                 'file_name' => $filename,
-                'file_size' => "10",
                 'file_url' => $url
             ]);
          }

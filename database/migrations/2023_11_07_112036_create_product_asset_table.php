@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('product_asset', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('product_id');
-            $table->string('file_size');
             $table->string('file_name');
             $table->string('file_url');
             $table->timestamps();

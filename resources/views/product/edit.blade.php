@@ -89,7 +89,7 @@
             <label for="asset" class="form-label">Product Image</label>
             <input type="hidden" name="oldImage" value="{{ $asset->file_name }}">
             @if ($asset->file_name)
-              <img src="{{ url('public/product/' . $asset->file_name) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block ">
+              <img src="{{ url('product/' . $asset->file_name) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block ">
             @else
               <img class="img-preview img-fluid mb-3 col-sm-5">
             @endif

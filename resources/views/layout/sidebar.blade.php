@@ -14,7 +14,7 @@
           <img src="{{asset('lte/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">{{auth()->user()->name}}</a>
         </div>
       </div>
 
@@ -39,7 +39,7 @@
           <li class="nav-header">USER MANAGEMENT</li>
           <li class="nav-item">
             <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-edit"></i>
+                <i class="nav-icon fas fa-user"></i>
                 <p>
                   User Management
                   <i class="fas fa-angle-left right"></i>
@@ -70,7 +70,7 @@
           <li class="nav-header">MASTER DATA</li>
           <li class="nav-item">
             <a href="/categories" class="nav-link">
-              <i class="nav-icon far fa-image"></i>
+              <i class="nav-icon fas fa-money-check"></i>
               <p>
                 Category
               </p>
@@ -78,7 +78,7 @@
           </li>
           <li class="nav-item">
             <a href="/brands" class="nav-link">
-              <i class="nav-icon fas fa-columns"></i>
+              <i class="nav-icon fas fa-business-time"></i>
               <p>
                 Brand
               </p>
@@ -86,7 +86,7 @@
           </li>
           <li class="nav-item">
             <a href="/products" class="nav-link">
-              <i class="nav-icon fas fa-columns"></i>
+              <i class="nav-icon fas fa-cart-plus"></i>
               <p>
                 Product
               </p>
