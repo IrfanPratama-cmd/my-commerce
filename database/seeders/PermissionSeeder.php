@@ -30,6 +30,7 @@ class PermissionSeeder extends Seeder
 
         $user_management = Permission::create(['name' => 'read-user-management' , 'modul_id' => $master->id,'guard_name' => 'web']);
         $master_data = Permission::create(['name' => 'read-master-data' , 'modul_id' => $master->id, 'guard_name' => 'web']);
+        $master_data = Permission::create(['name' => 'read-dashboard' , 'modul_id' => $master->id, 'guard_name' => 'web']);
 
         $read_permission = Permission::create(['name' => 'read-permission' ,'modul_id' => $permission->id, 'guard_name' => 'web']);
         $create_permission = Permission::create(['name' => 'create-permission' ,'modul_id' => $permission->id, 'guard_name' => 'web']);

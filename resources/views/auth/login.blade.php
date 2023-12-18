@@ -14,6 +14,8 @@
   <link rel="stylesheet" href="{{asset('lte/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('lte/dist/css/adminlte.min.css')}}">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" type="text/css" href="/css/toast.css">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -24,20 +26,6 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>
-
-    @if(session()->has('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-
-    @if(session()->has('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      {{ session('error') }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    @endif
 
       <form method="POST" action="/login">
         @csrf
@@ -85,7 +73,7 @@
       </form>
 
       <p class="mb-1">
-        <a href="/forgot-password">I forgot my password</a>
+        <a href="/forget-password">I forgot my password</a>
       </p>
       <p class="mb-0">
         <a href="/register" class="text-center">Register a new user</a>
@@ -102,5 +90,44 @@
 <script src="{{asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('lte/dist/js/adminlte.min.js')}}"></script>
+<script>
+
+    @if (session('success'))
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+    })
+    Toast.fire({
+        icon: 'success',
+        title: '{{ session('success') }}',
+    })
+    @endif
+
+    @if (session('error'))
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-right',
+        iconColor: 'white',
+        customClass: {
+            popup: 'colored-toast',
+        },
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+    })
+    Toast.fire({
+        icon: 'error',
+        title: '{{ session('error') }}',
+    })
+    @endif
+
+</script>
 </body>
 </html>

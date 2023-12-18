@@ -12,7 +12,7 @@ class ProductAsset extends Model
 
     protected $table = "product_asset";
 
-    protected $fillable = ['id', 'product_id', 'file_name', 'file_url'];
+    protected $fillable = ['id', 'product_id', 'file_name', 'file_url', 'is_primary'];
 
     protected $primaryKey = 'id';
 

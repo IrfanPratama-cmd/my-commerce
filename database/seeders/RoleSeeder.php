@@ -13,11 +13,10 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $role_staff = Role::create(['name' => 'staff', 'guard_name' => 'web']);
         $role_admin = Role::create(['name' => 'admin' , 'guard_name' => 'web']);
-        $role_manager = Role::create(['name' => 'manager' , 'guard_name' => 'web']);
+        $role_user = Role::create(['name' => 'user' , 'guard_name' => 'web']);
 
-        $role_admin->givePermissionTo(['read-master-data', 'read-user-management']);
+        $role_admin->givePermissionTo(['read-master-data', 'read-user-management', 'read-dashboard']);
         $role_admin->givePermissionTo(['read-role','create-role', 'update-role', 'delete-role']);
         $role_admin->givePermissionTo(['read-permission','create-permission', 'update-permission', 'delete-permission']);
         $role_admin->givePermissionTo(['read-user','create-user', 'update-user', 'delete-user']);
@@ -25,7 +24,7 @@ class RoleSeeder extends Seeder
         $role_admin->givePermissionTo(['read-category','create-category', 'update-category', 'delete-category']);
         $role_admin->givePermissionTo(['read-product','create-product', 'update-product', 'delete-product']);
 
-        $role_staff->givePermissionTo('read-role');
+        $role_user->givePermissionTo('read-dashboard');
 
     }
 }

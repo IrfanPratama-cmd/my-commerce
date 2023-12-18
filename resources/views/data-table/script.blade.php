@@ -1,7 +1,7 @@
-{{-- <!-- jQuery -->
+<!-- jQuery -->
 <script src="{{asset('lte/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
-<script src="{{asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script> --}}
+<script src="{{asset('lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- DataTables  & Plugins -->
 <script src="{{asset('lte/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('lte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>

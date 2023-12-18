@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('product_id');
             $table->string('file_name');
             $table->string('file_url');
+            $table->boolean('is_primary')->nullable();
             $table->timestamps();
         });
     }

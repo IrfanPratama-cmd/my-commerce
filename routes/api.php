@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Ecommerce\CartController;
+use App\Http\Controllers\Ecommerce\ProductController;
+use App\Http\Controllers\Ecommerce\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +20,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/midtrans-callback', [TransactionController::class, 'callback']);
+
+Route::get('/products', [ProductController::class, 'index']);
+
+Route::get('/count-carts', [CartController::class, 'countCart']);

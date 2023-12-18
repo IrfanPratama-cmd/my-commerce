@@ -101,7 +101,7 @@
             </div>
             @enderror
           </div>
-          <button type="submit" class="btn btn-primary">Create Product</button>
+          <button type="submit" class="btn btn-primary">Edit Product</button>
         </form>
       </div>
 </div>

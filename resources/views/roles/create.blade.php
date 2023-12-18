@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="container px-4">
+                <div class="container">
                     {!! Form::open(array('route' => 'roles.store','method'=>'POST')) !!}
                     <div class="row py-3">
                         <div class="col-xs-12 col-sm-12 col-md-12">

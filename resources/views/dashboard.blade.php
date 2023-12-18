@@ -2,6 +2,12 @@
 
 @section('container')
 
+@if(session()->has('success'))
+<script>
+    Swal.fire('Success', '{{ session('success') }}', 'success');
+</script>
+@endif
+
     <div class="row">
         <div class="col-lg-3 col-6">
           <!-- small box -->

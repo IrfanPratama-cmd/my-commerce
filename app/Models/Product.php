@@ -43,4 +43,8 @@ class Product extends Model
     public function asset(){
         return $this->hasMany(ProductAsset::class);
     }
+
+    public function checkout(){
+        return $this->hasMany(Checkout::class);
+    }
 }
