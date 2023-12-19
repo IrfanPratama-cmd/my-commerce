@@ -2,19 +2,15 @@
 
 ## Master Data
 
-| category                        |
-| ----------------- | ----------- |
-| id                | uuid (PK)   |
-| category_code     | varchar(255)|
-| category_name     | varchar(255)|
-
-| brand                           |
-| ----------------- | ----------- |
-| id                | uuid (PK)   |
-| brand_code        | varchar(255)|
-| brand_name        | varchar(255)|
-
-
+```sql
+CREATE TABLE [category](
+	[id] [varchar](36) NOT NULL,
+    [category_code] [varchar](36) NULL,
+	[category_name] [varchar](36) NULL,
+	[created_at] [datetime] NOT NULL,
+	[updated_at] [datetime] NULL,
+)
+```
 
 ## User Authentication
 
