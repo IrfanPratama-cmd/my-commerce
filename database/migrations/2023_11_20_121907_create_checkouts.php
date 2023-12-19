@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('product_id');
             $table->uuid('transaction_id');
             $table->integer('qty');
+            $table->integer('price');
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ class Checkout extends Model
 
     protected $table = "checkouts";
 
-    protected $fillable = ['id', 'product_id', 'transaction_id', 'qty'];
+    protected $fillable = ['id', 'product_id', 'transaction_id', 'qty', 'price'];
 
     protected $primaryKey = 'id';
 

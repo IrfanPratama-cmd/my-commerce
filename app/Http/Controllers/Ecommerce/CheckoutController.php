@@ -77,7 +77,8 @@ class CheckoutController extends Controller
             Checkout::create([
                 'product_id' => $c->product_id,
                 'transaction_id' => $transaction->id,
-                'qty' => $c->qty
+                'qty' => $c->qty,
+                'price' => $c->product->price
             ]);
         }
 
