@@ -3,6 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
+use App\Models\UserProfile;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +41,7 @@ class AuthenticationTest extends TestCase
 
         $this->assertAuthenticatedAs($user);
 
+        UserProfile::where('user_id', $user->id)->delete();
         User::where('email', 'test@example.com')->delete();
     }
 
