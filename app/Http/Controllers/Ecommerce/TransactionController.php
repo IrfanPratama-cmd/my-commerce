@@ -47,4 +47,9 @@ class TransactionController extends Controller
 
      return view('ecommerce.transaction.index', compact('transaction', 'category'));
    }
+
+   public function cancel($id){
+      $transaction = Transaction::where('id', $id)->update(["transaction_status" => "cancel"]);
+      return redirect()->back()->with('success', 'Transaction has been canceled!');
+   }
 }

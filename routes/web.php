@@ -116,3 +116,4 @@ Route::post('/checkouts', [CheckoutController::class, 'create'])->middleware(['a
 //Transaction
 Route::get('/user-transactions', [TransactionController::class, 'index'])->middleware(['auth','is_verify_email']);
 Route::get('/invoice/{id}', [TransactionController::class, 'invoice'])->middleware(['auth','is_verify_email']);
+Route::post('/cancel-transactions/{id}', [TransactionController::class, 'cancel'])->middleware(['auth','is_verify_email']);

@@ -149,7 +149,8 @@
               {data: 'category.category_name', name: 'category.category_name'},
               {data: 'brand.brand_name', name: 'brand.brand_name'},
               {data: 'stock', name: 'stock'},
-              {data: 'price', name: 'price'},
+              {data: 'formatted_price', name: 'price'},
+            //   {data: 'price', name: 'price'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
       });

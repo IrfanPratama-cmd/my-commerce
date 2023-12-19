@@ -52,6 +52,12 @@ class AuthController extends Controller
             'password' => 'required|min:6',
         ]);
 
+        $check = User::where('email', $request->email)->first();
+
+        if($check != null){
+            return back()->with('error', 'Email has been used!');
+        }
+
         $data = $request->all();
         $createUser = $this->create($data);
 

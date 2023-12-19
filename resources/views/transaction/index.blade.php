@@ -72,7 +72,7 @@
           processing: true,
           serverSide: true,
           ajax: "/transactions",
-          columns: [
+          columns: [ng
               {data: 'transaction_time', name: 'transaction_time'},
               {data: 'user.name', name: 'user.name'},
               {data: 'id', name: 'id'},

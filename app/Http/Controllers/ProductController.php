@@ -40,6 +40,10 @@ class ProductController extends Controller
 
                             return $btn;
                     })
+                    ->addColumn('formatted_price', function ($data) {
+                        return number_format($data->price); // Adjust the formatting as per your currency requirements
+                    })
+                    ->rawColumns(['formatted_price'])
                     ->rawColumns(['action'])
                     ->make(true);
         }

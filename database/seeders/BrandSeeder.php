@@ -16,5 +16,6 @@ class BrandSeeder extends Seeder
         Brand::create(['brand_code' => 'SM','brand_name' => 'Samsung']);
         Brand::create(['brand_code' => 'XM','brand_name' => 'Xiaomi']);
         Brand::create(['brand_code' => 'AS','brand_name' => 'Asus']);
+        Brand::create(['brand_code' => 'IP','brand_name' => 'Iphone']);
     }
 }

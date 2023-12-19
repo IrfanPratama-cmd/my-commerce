@@ -5,12 +5,12 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Tests\TestCase;
 
 class AuthenticationTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function test_login_screen_can_be_rendered(): void
     {
         $response = $this->get('/login');
@@ -18,38 +18,57 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_users_can_authenticate_using_the_login_screen(): void
+       /** @test */
+    public function it_redirects_to_index_on_successful_login()
     {
-        $user = User::factory()->create();
+        $data = [
+            'name' => 'Test Name',
+            'email' => 'test@example.com',
+            'role_id' => 1,
+            'password' => bcrypt('password123'),
+        ];
+
+        $user = User::create($data);
 
         $response = $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
+            'email' => 'test@example.com',
+            'password' => 'password123',
         ]);
 
-        $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect('/')
+            ->assertSessionHas('success', 'Login Successfull');
+
+        $this->assertAuthenticatedAs($user);
+
+        User::where('email', 'test@example.com')->delete();
     }
 
-    public function test_users_can_not_authenticate_with_invalid_password(): void
+    /** @test */
+    public function it_redirects_to_login_with_error_on_failed_login()
     {
-        $user = User::factory()->create();
-
-        $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'wrong-password',
+        $response = $this->post('/login', [
+            'email' => 'wrong@example.com',
+            'password' => 'wrongpassword',
         ]);
 
-        $this->assertGuest();
+        $response->assertRedirect('/login')
+            ->assertSessionHas('error', 'Login Gagal!, Email atau Password anda salah!.');
     }
 
-    public function test_users_can_logout(): void
+    /** @test */
+    public function testLogout()
     {
-        $user = User::factory()->create();
+        // Simulate a user logged in
+        $user = User::where('email', 'admin@gmail.com')->first();
+        $this->actingAs($user);
 
-        $response = $this->actingAs($user)->post('/logout');
+        // Perform logout
+        $response = $this->get('/logout');
 
-        $this->assertGuest();
-        $response->assertRedirect('/');
+        // Assert that user is redirected to login page after logout
+        $response->assertRedirect('/login');
+
+        // Assert that user is logged out
+        $this->assertFalse(Auth::check());
     }
 }

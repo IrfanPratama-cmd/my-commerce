@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid('user_id');
             $table->dateTime('transaction_time');
             $table->string('transaction_code');
-            $table->enum('transaction_status', ['pending', 'paid']);
+            $table->enum('transaction_status', ['pending', 'paid', 'cancel']);
             $table->integer('total_price');
             $table->integer('total_tax');
             $table->integer('price_after_tax');

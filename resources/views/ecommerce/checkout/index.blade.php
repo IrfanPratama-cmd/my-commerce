@@ -102,7 +102,11 @@
                     <input type="hidden" name="transaction_id" value="{{$transaction->id}}">
                     <input type="hidden" name="gross_amount" value="{{$transaction->price_after_tax}}">
                     <button class="btn btn-block btn-primary my-3 py-3" id="pay-button">Proceed To Pay</button>
-                    <a href="/cancel-transaction" class="btn btn-block btn-danger my-1 py-3">Cancel</a>
+                    <form action="/cancel-transactions/{{$transaction->id}}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-block btn-danger my-1 py-3">Cancel</button>
+                    </form>
+                    {{-- <a href="/cancel-transaction/{{$transaction->id}}" class="btn btn-block btn-danger my-1 py-3">Cancel</a> --}}
                 </div>
             </div>
         </div>
