@@ -36,6 +36,8 @@ class ProductTest extends TestCase
         $response->assertStatus(200);
         $response->assertViewIs('product.index');
         $response->assertViewHas('page', 'Master Data Product');
+
+        Product::where('product_code', 'Test')->delete();
     }
 
     // public function testStoreProducts()
