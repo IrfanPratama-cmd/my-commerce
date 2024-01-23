@@ -9,7 +9,7 @@ class Modul extends Model
 {
     use HasFactory;
 
-    protected $table = "modul";
+    protected $table = "moduls";
 
     public function permission(){
         return $this->hasMany(Permission::class);

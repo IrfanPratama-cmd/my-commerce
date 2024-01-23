@@ -16,6 +16,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TransactionController as ControllersTransactionController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VariantController;
 use App\Models\Category;
 use App\Models\Permission;
 use Illuminate\Support\Facades\Route;
@@ -70,28 +71,39 @@ Route::post('/permissions', [PermissionController::class, 'store'])->name('permi
 Route::get('/permissions/{id}', [PermissionController::class, 'edit'])->name('permissions.edit');
 Route::delete('/permissions/{id}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
 
+// Master Brand
 Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
 Route::post('/brands', [BrandController::class, 'store'])->name('brands.store');
 Route::get('/brands/{id}', [BrandController::class, 'edit'])->name('brands.edit');
 Route::delete('/brands/{id}', [BrandController::class, 'destroy'])->name('brands.destroy');
 
+// Master Category
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
 Route::get('/categories/{id}', [CategoryController::class, 'edit'])->name('categories.edit');
 Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
+// Master Product
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/create-products', [ProductController::class, 'create'])->name('products.create');
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 Route::get('/products/{id}', [ProductController::class, 'edit'])->name('products.edit');
 Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
 Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+Route::post('/product-uploads', [ProductController::class,'uploads'])->name('product.uploads');
+
+// Master Variant
+Route::get('/variants', [VariantController::class, 'index'])->name('variants.index');
+Route::post('/variants', [VariantController::class, 'store'])->name('variants.store');
+Route::get('/variants/{id}', [VariantController::class, 'edit'])->name('variants.edit');
+Route::delete('/variants/{id}', [VariantController::class, 'destroy'])->name('variants.destroy');
 
 Route::get('/transactions', [ControllersTransactionController::class, 'index'])->name('transactions.index');
 Route::get('/transactions/{id}', [ControllersTransactionController::class, 'show'])->name('transactions.show');
 
 Route::get('/detail-product/{id}', [DashboardController::class, 'showProduct'])->middleware(['auth','is_verify_email']);
 
+// User Profile
 Route::get('/user-profile', [ProfileController::class, 'index'])->name('profile.index')->middleware(['auth','is_verify_email']);
 Route::get('/edit-profile', [ProfileController::class, 'edit'])->middleware(['auth','is_verify_email']);
 Route::post('/update-profile', [ProfileController::class, 'update'])->middleware(['auth','is_verify_email']);

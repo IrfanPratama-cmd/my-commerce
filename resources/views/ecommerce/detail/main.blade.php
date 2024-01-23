@@ -37,9 +37,9 @@
             <div class="col-lg-5 pb-5">
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner border">
-                        @foreach ($asset as $a )
-                            <div class="carousel-item active">
-                                <img class="w-100 h-100" src="{{ url('product/' . $a->file_name) }}" alt="Image">
+                        @foreach ($asset as $index => $a)
+                            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                <img class="w-100 h-100" src="{{ url('product-asset/' . $a->file_name) }}" alt="Image">
                             </div>
                         @endforeach
                     </div>

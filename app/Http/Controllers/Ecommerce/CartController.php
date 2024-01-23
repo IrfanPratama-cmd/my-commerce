@@ -19,8 +19,8 @@ class CartController extends Controller
         $category = Category::all();
 
         $totalPrice = DB::table('carts')
-        ->join('product', 'carts.product_id', '=', 'product.id')
-        ->select(DB::raw('SUM(carts.qty * product.price) AS total_price'))
+        ->join('products', 'carts.product_id', '=', 'products.id')
+        ->select(DB::raw('SUM(carts.qty * products.price) AS total_price'))
         ->where('user_id', auth()->user()->id)
         ->first();
 

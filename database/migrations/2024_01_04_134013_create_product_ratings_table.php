@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('moduls', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
+        Schema::create('product_ratings', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->uuid('product_variant_id');
+            $table->foreignId('user_id');
+            $table->integer('rating');
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('modul');
+        Schema::dropIfExists('product_ratings');
     }
 };

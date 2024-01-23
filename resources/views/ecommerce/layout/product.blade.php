@@ -8,7 +8,7 @@
                 <div class="card product-item border-0 mb-4">
                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                         @foreach ($p->asset as $asset )
-                            <img class="img-fluid" style="width: 300px; height: 280px;" src="{{ url('product/' . $asset->file_name) }}" alt="">
+                            <img class="img-fluid" style="width: 300px; height: 280px;" src="{{ url('product-asset/' . $asset->file_name) }}" alt="">
                             <?php break ?>
                         @endforeach
                     </div>

@@ -23,6 +23,8 @@
   <script src="{{asset('lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
   <!-- AdminLTE App -->
   <script src="{{asset('lte/dist/js/adminlte.js')}}"></script>
+  {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script> --}}
   {{-- <!-- AdminLTE for demo purposes -->
   <script src="{{asset('lte/dist/js/demo.js')}}"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

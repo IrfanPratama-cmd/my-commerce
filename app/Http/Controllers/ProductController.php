@@ -57,6 +57,20 @@ class ProductController extends Controller
         return view('product.create',compact('category','brand', 'page'));
     }
 
+    public function uploads(Request $request)
+    {
+        $path = 'product-asset/';
+
+        $file = $request->file('file');
+        $name = uniqid() . '_' . trim($file->getClientOriginalName());
+        $file->move($path, $name);
+
+        return response()->json([
+            'name'          => $name,
+            'original_name' => $file->getClientOriginalName(),
+        ]);
+    }
+
     public function store(Request $request)
     {
         // dd($request);
@@ -81,6 +95,8 @@ class ProductController extends Controller
                     'description' => $request->description
                 ]);
 
+         $time = time();
+
          if ($files = $request->file('asset')) {
 
             //delete old file
@@ -89,8 +105,8 @@ class ProductController extends Controller
 
 
             //insert new file
-            $destinationPath = 'product/'; // upload path
-            $filename = $request->product_name . '.' . $files->getClientOriginalExtension();
+            $destinationPath = 'product-asset/'; // upload path
+            $filename = $request->product_name. '.' . $time . '.' . $files->getClientOriginalExtension();
             $files->move($destinationPath, $filename);
             // $size = $request->file('asset')->getSize();
             $url = $destinationPath . $filename;
@@ -101,6 +117,18 @@ class ProductController extends Controller
                 'file_size' => "10",
                 'file_url' => $url,
                 'is_primary' => true
+            ]);
+         }
+
+         $path = 'product-asset/';
+
+         foreach($request->input('document', []) as $file) {
+            ProductAsset::create([
+                'product_id' => $product->id,
+                'file_name' => $file,
+                'file_size' => "12",
+                'file_url' => $path . $file,
+                'is_primary' => false
             ]);
          }
 
@@ -116,11 +144,12 @@ class ProductController extends Controller
         $product = Product::find($id);
         $category = Category::all();
         $brand = Brand::all();
-        $asset = ProductAsset::where("product_id", $id)->first();
+        $asset = ProductAsset::where(["product_id" => $id, "is_primary" => 1])->first();
+        $images = ProductAsset::where(["product_id" => $id, "is_primary" => 0])->get();
         $page = "Create Data Product";
 
         // dd($asset);
-        return view('product.edit', compact('page', 'product', 'category', 'brand', 'asset'));
+        return view('product.edit', compact('page', 'product', 'category', 'brand', 'asset', 'images'));
     }
 
     public function update($id, Request $request){

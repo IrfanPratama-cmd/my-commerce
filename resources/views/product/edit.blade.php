@@ -86,10 +86,10 @@
         </div>
 
         <div class="mb-3">
-            <label for="asset" class="form-label">Product Image</label>
+            <label for="asset" class="form-label">Product Cover</label>
             <input type="hidden" name="oldImage" value="{{ $asset->file_name }}">
             @if ($asset->file_name)
-              <img src="{{ url('product/' . $asset->file_name) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block ">
+              <img src="{{ url('product-asset/' . $asset->file_name) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block ">
             @else
               <img class="img-preview img-fluid mb-3 col-sm-5">
             @endif
@@ -101,12 +101,19 @@
             </div>
             @enderror
           </div>
+          <div class="mb-3">
+            <div class="form-group">
+                <label for="document" class="form-label">Product Image</label>
+                <div class="needsclick dropzone" id="document-dropzone">
+            </div>
+          </div>
           <button type="submit" class="btn btn-primary">Edit Product</button>
         </form>
       </div>
 </div>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
 
 
   <script>
@@ -125,5 +132,70 @@
         }
     }
     </script>
+
+<script>
+    var uploadedDocumentMap = {}
+    Dropzone.options.documentDropzone = {
+      url: "{{ route('product.uploads') }}",
+      thumbnailWidth: 100,
+      thumbnailHeight: 100,
+      maxFilesize: 2, // MB
+      addRemoveLinks: true,
+      headers: {
+        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+      },
+      success: function (file, response) {
+        $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
+        uploadedDocumentMap[file.name] = response.name
+      },
+      removedfile: function (file) {
+        file.previewElement.remove()
+        var name = ''
+        if (typeof file.file_name !== 'undefined') {
+          name = file.file_name
+        } else {
+          name = uploadedDocumentMap[file.name]
+        }
+        $('form').find('input[name="document[]"][value="' + name + '"]').remove()
+      },
+      init: function () {
+        var existingFiles = {!! json_encode($images) !!};
+
+            // Menampilkan file yang sudah ada di Dropzone
+            for (var i = 0; i < existingFiles.length; i++) {
+                var mockFile = existingFiles[i];
+                this.emit("addedfile", mockFile);
+                this.emit("thumbnail", mockFile, "/product-asset/" + mockFile.file_name);
+                this.emit("complete", mockFile);
+
+                console.log(mockFile)
+            }
+
+            // Menangani penghapusan file
+            this.on("removedfile", function (file) {
+                // Logika untuk menghapus file dari server atau database
+                // Contoh Ajax request:
+                // $.ajax({
+                //     type: 'POST',
+                //     url: '/delete-image',
+                //     data: { filename: file.name },
+                //     success: function(data) {
+                //         console.log('File deleted successfully');
+                //     }
+                // });
+            });
+            @if(isset($project) && $project->document)
+            var files =
+                {!! json_encode($project->document) !!}
+            for (var i in files) {
+                var file = files[i]
+                this.options.addedfile.call(this, file)
+                file.previewElement.classList.add('dz-complete')
+                $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
+            }
+            @endif
+      }
+    }
+  </script>
 
 @endsection

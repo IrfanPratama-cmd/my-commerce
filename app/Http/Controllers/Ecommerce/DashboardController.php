@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function index(){
-        $product = Product::with('asset')->get();
+        $product = Product::with(['asset' => function($query) {
+            $query->where('is_primary', 1);
+        }])->get();
         $category = Category::all();
-        $brand = Brand::leftJoin('product', 'brand.id', '=', 'product.brand_id')
-        ->select('brand.id', 'brand.brand_name', DB::raw('COUNT(product.id) as product_count'))
-        ->groupBy('brand.id', 'brand.brand_name')->get();
+        $brand = Brand::leftJoin('products', 'brands.id', '=', 'products.brand_id')
+        ->select('brands.id', 'brands.brand_name', DB::raw('COUNT(products.id) as product_count'))
+        ->groupBy('brands.id', 'brands.brand_name')->get();
 
         // return response()->json($product);
 

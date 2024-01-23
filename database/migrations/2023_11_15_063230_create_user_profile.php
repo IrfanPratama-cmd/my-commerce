@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_profile', function (Blueprint $table) {
+        Schema::create('user_profiles', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->foreignId('user_id');
             $table->string('full_name')->nullable();

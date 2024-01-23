@@ -93,6 +93,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="/variants" class="nav-link">
+              <i class="nav-icon fas fa-cart-plus"></i>
+              <p>
+                Variant
+              </p>
+            </a>
+          </li>
           @endcan
 
           <li class="nav-header">TRANSACTION</li>

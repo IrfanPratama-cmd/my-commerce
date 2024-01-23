@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class UserProfile extends Model
+class Variant extends Model
 {
     use HasFactory;
 
-    protected $table = "user_profiles";
+    protected $table = "variants";
 
-    protected $fillable = ['id', 'user_id', 'full_name', 'phone_number', 'address', 'profile_asset'];
+    protected $fillable = ['id', 'variant_name', 'description'];
 
     protected $primaryKey = 'id';
 
@@ -30,7 +30,4 @@ class UserProfile extends Model
         });
     }
 
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
 }

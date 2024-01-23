@@ -10,7 +10,7 @@ class ProductAsset extends Model
 {
     use HasFactory;
 
-    protected $table = "product_asset";
+    protected $table = "product_assets";
 
     protected $fillable = ['id', 'product_id', 'file_name', 'file_url', 'is_primary'];
 

@@ -77,7 +77,7 @@
         </div>
 
           <div class="mb-3">
-              <label for="image" class="form-label">Product Image</label>
+              <label for="image" class="form-label">Cover Image</label>
               <input type="hidden" name="oldImage">
 
                 <img class="img-preview img-fluid mb-3 col-sm-5">
@@ -89,12 +89,20 @@
               </div>
               @enderror
           </div>
+          <div class="mb-3">
+            <div class="form-group">
+                <label for="document" class="form-label">Product Image</label>
+                <div class="needsclick dropzone" id="document-dropzone">
+            </div>
+          </div>
           <button type="submit" class="btn btn-primary">Create Product</button>
         </form>
       </div>
 </div>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
 
 
   <script>
@@ -113,5 +121,42 @@
         }
     }
     </script>
+    <script>
+        var uploadedDocumentMap = {}
+        Dropzone.options.documentDropzone = {
+          url: "{{ route('product.uploads') }}",
+          maxFilesize: 2, // MB
+          addRemoveLinks: true,
+          headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+          },
+          success: function (file, response) {
+            $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
+            uploadedDocumentMap[file.name] = response.name
+          },
+          removedfile: function (file) {
+            file.previewElement.remove()
+            var name = ''
+            if (typeof file.file_name !== 'undefined') {
+              name = file.file_name
+            } else {
+              name = uploadedDocumentMap[file.name]
+            }
+            $('form').find('input[name="document[]"][value="' + name + '"]').remove()
+          },
+          init: function () {
+            @if(isset($project) && $project->document)
+              var files =
+                {!! json_encode($project->document) !!}
+              for (var i in files) {
+                var file = files[i]
+                this.options.addedfile.call(this, file)
+                file.previewElement.classList.add('dz-complete')
+                $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
+              }
+            @endif
+          }
+        }
+      </script>
 
 @endsection

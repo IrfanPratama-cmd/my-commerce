@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_asset', function (Blueprint $table) {
+        Schema::create('product_assets', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('product_id');
             $table->string('file_name');
